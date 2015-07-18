@@ -1,15 +1,21 @@
 package com.kjipo.data;
 
+import com.kjipo.sqlTables.QParameters;
 import com.kjipo.sqlTables.QTest;
 import com.mysema.query.sql.HSQLDBTemplates;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLTemplates;
+import com.mysema.query.sql.codegen.MetaDataExporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -24,6 +30,18 @@ public class DataProvider implements DataRepository {
     @Override
     public Double[] getValueSummary(String parameter, long startIndex, long stopIndex) {
         return new Double[0];
+    }
+
+    @Override
+    public List<String> getParameters() {
+        QParameters parameters = new QParameters("c");
+        SQLTemplates dialect = new HSQLDBTemplates();
+        try {
+            SQLQuery query = new SQLQuery(dataSource.getConnection(), dialect);
+            return query.from(parameters).list(parameters.name);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

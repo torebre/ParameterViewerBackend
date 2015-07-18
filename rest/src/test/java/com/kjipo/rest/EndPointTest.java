@@ -21,7 +21,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @SpringApplicationConfiguration(classes = {ParameterEndpoints.class, DataProvider.class})
 @WebAppConfiguration
 public class EndPointTest {
-
     @Autowired
     private WebApplicationContext webApplicationContext;
 
@@ -31,6 +30,14 @@ public class EndPointTest {
     @Before
     public void setup() throws Exception {
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
+    }
+
+    @Test
+    public void getParametersTest() throws Exception {
+        mockMvc.perform(get("/parameters"))
+                .andDo(mvcResult -> System.out.println("Result: " +mvcResult.getResponse().getContentAsString())
+                )
+                .andExpect(status().isOk());
     }
 
     @Test
