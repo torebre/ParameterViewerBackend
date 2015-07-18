@@ -38,8 +38,10 @@ public class EndPointTest {
         // TODO Finish test
 
         mockMvc.perform(get("/parameters/Parameter1")
-                .param("start", "1000")
-                .param("stop", "1500"))
+                .param("start", "100")
+                .param("stop", "110"))
+                .andDo(mvcResult -> System.out.println("Result: " +mvcResult.getResponse().getContentAsString())
+                )
                 .andExpect(status().isOk());
     }
 
