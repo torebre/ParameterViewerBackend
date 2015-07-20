@@ -1,4 +1,4 @@
-package kjipo.com.kjipo.rest;
+package com.kjipo.rest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

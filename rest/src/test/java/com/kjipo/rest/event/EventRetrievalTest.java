@@ -1,6 +1,7 @@
-package com.kjipo.rest;
+package com.kjipo.rest.event;
 
-import com.kjipo.data.DataProvider;
+
+import com.kjipo.event.Config;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,16 +16,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {ParameterEndpoints.class, DataProvider.class})
+@SpringApplicationConfiguration(classes = {EventEndpoints.class, Config.class})
 @WebAppConfiguration
-public class EndPointTest {
+public class EventRetrievalTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
     private MockMvc mockMvc;
-
 
     @Before
     public void setup() throws Exception {
@@ -33,22 +32,13 @@ public class EndPointTest {
 
     @Test
     public void getParametersTest() throws Exception {
-        mockMvc.perform(get("/parameters"))
-                .andDo(mvcResult -> System.out.println("Result: " +mvcResult.getResponse().getContentAsString())
-                )
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testRequest() throws Exception {
-        // TODO Finish test
-
-        mockMvc.perform(get("/parameters/Parameter1")
-                .param("start", "100")
-                .param("stop", "110"))
-                .andDo(mvcResult -> System.out.println("Result: " +mvcResult.getResponse().getContentAsString())
+        mockMvc.perform(get("/events/1"))
+                .andDo(mvcResult -> System.out.println("Result: " + mvcResult.getResponse().getContentAsString())
                 )
                 .andExpect(status().isOk());
     }
 
 }
+
+
+

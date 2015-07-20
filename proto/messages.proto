@@ -1,3 +1,8 @@
+package com.kjipo.proto;
+
+option java_package = "com.kjipo.proto";
+option java_outer_classname = "MessagesProto";
+
 
 message DoubleDataBlock {
     required int32 blockId = 1;

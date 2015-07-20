@@ -1,4 +1,4 @@
-package kjipo.com.kjipo.rest;
+package com.kjipo.rest;
 
 import com.kjipo.data.DataProvider;
 import org.slf4j.Logger;
