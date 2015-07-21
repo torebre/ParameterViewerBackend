@@ -19,16 +19,20 @@ import java.util.stream.Stream;
 
 /**
  * Contains helper methods for creating test data for the database.
- *
  */
-public class SQLTestUtilities {
+public final class SQLTestUtilities {
+
+
+    private SQLTestUtilities() {
+
+    }
 
 
     @SuppressWarnings("unused")
-    public static void createTestData() throws IOException {
+    private static void createTestData() throws IOException {
         final DateTimeFormatter formatter =
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
-        File file = new File("/home/student/IdeaProjects/ViewerBackend/data/src/main/resources/data.sql");
+        File file = new File("/data/src/main/resources/addDataForTest.sql");
         Files.deleteIfExists(file.toPath());
         int counter = 0;
 
@@ -61,8 +65,8 @@ public class SQLTestUtilities {
     }
 
 
-    public static void createTestDataWitLongIndex() throws IOException {
-        File file = new File("/home/student/IdeaProjects/ViewerBackend/rest/src/test/resources/data.sql");
+    private static void createTestDataWitLongIndex() throws IOException {
+        File file = new File("/rest/src/test/resources/addDataForTest.sql");
         Files.deleteIfExists(file.toPath());
         int counter = 0;
 

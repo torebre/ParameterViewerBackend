@@ -1,4 +1,4 @@
-package com.kjipo.rest;
+package com.kjipo.rest.data;
 
 import com.kjipo.data.DataProvider;
 import org.junit.Before;
@@ -43,7 +43,7 @@ public class EndPointTest {
     public void testRequest() throws Exception {
         // TODO Finish test
 
-        mockMvc.perform(get("/parameters/Parameter1")
+        mockMvc.perform(get("/parameters/1/1")
                 .param("start", "100")
                 .param("stop", "110"))
                 .andDo(mvcResult -> System.out.println("Result: " +mvcResult.getResponse().getContentAsString())

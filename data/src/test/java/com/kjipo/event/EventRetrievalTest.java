@@ -1,9 +1,6 @@
-package com.kjipo;
+package com.kjipo.event;
 
 
-import com.kjipo.event.Config;
-import com.kjipo.event.EventRepository;
-import com.kjipo.event.Events;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

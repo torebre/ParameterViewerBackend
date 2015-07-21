@@ -13,38 +13,29 @@ public final class MessagesProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>required int32 blockId = 1;</code>
-     */
-    boolean hasBlockId();
-    /**
-     * <code>required int32 blockId = 1;</code>
-     */
-    int getBlockId();
-
-    /**
-     * <code>required double average = 2;</code>
+     * <code>required double average = 1;</code>
      */
     boolean hasAverage();
     /**
-     * <code>required double average = 2;</code>
+     * <code>required double average = 1;</code>
      */
     double getAverage();
 
     /**
-     * <code>required double minimum = 3;</code>
+     * <code>required double minimum = 2;</code>
      */
     boolean hasMinimum();
     /**
-     * <code>required double minimum = 3;</code>
+     * <code>required double minimum = 2;</code>
      */
     double getMinimum();
 
     /**
-     * <code>required double maximum = 4;</code>
+     * <code>required double maximum = 3;</code>
      */
     boolean hasMaximum();
     /**
-     * <code>required double maximum = 4;</code>
+     * <code>required double maximum = 3;</code>
      */
     double getMaximum();
   }
@@ -100,23 +91,18 @@ public final class MessagesProto {
               }
               break;
             }
-            case 8: {
+            case 9: {
               bitField0_ |= 0x00000001;
-              blockId_ = input.readInt32();
+              average_ = input.readDouble();
               break;
             }
             case 17: {
               bitField0_ |= 0x00000002;
-              average_ = input.readDouble();
+              minimum_ = input.readDouble();
               break;
             }
             case 25: {
               bitField0_ |= 0x00000004;
-              minimum_ = input.readDouble();
-              break;
-            }
-            case 33: {
-              bitField0_ |= 0x00000008;
               maximum_ = input.readDouble();
               break;
             }
@@ -160,68 +146,52 @@ public final class MessagesProto {
     }
 
     private int bitField0_;
-    public static final int BLOCKID_FIELD_NUMBER = 1;
-    private int blockId_;
+    public static final int AVERAGE_FIELD_NUMBER = 1;
+    private double average_;
     /**
-     * <code>required int32 blockId = 1;</code>
+     * <code>required double average = 1;</code>
      */
-    public boolean hasBlockId() {
+    public boolean hasAverage() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required int32 blockId = 1;</code>
-     */
-    public int getBlockId() {
-      return blockId_;
-    }
-
-    public static final int AVERAGE_FIELD_NUMBER = 2;
-    private double average_;
-    /**
-     * <code>required double average = 2;</code>
-     */
-    public boolean hasAverage() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>required double average = 2;</code>
+     * <code>required double average = 1;</code>
      */
     public double getAverage() {
       return average_;
     }
 
-    public static final int MINIMUM_FIELD_NUMBER = 3;
+    public static final int MINIMUM_FIELD_NUMBER = 2;
     private double minimum_;
     /**
-     * <code>required double minimum = 3;</code>
+     * <code>required double minimum = 2;</code>
      */
     public boolean hasMinimum() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required double minimum = 3;</code>
+     * <code>required double minimum = 2;</code>
      */
     public double getMinimum() {
       return minimum_;
     }
 
-    public static final int MAXIMUM_FIELD_NUMBER = 4;
+    public static final int MAXIMUM_FIELD_NUMBER = 3;
     private double maximum_;
     /**
-     * <code>required double maximum = 4;</code>
+     * <code>required double maximum = 3;</code>
      */
     public boolean hasMaximum() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>required double maximum = 4;</code>
+     * <code>required double maximum = 3;</code>
      */
     public double getMaximum() {
       return maximum_;
     }
 
     private void initFields() {
-      blockId_ = 0;
       average_ = 0D;
       minimum_ = 0D;
       maximum_ = 0D;
@@ -232,10 +202,6 @@ public final class MessagesProto {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
-      if (!hasBlockId()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       if (!hasAverage()) {
         memoizedIsInitialized = 0;
         return false;
@@ -256,16 +222,13 @@ public final class MessagesProto {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeInt32(1, blockId_);
+        output.writeDouble(1, average_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeDouble(2, average_);
+        output.writeDouble(2, minimum_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeDouble(3, minimum_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeDouble(4, maximum_);
+        output.writeDouble(3, maximum_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -278,19 +241,15 @@ public final class MessagesProto {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(1, blockId_);
+          .computeDoubleSize(1, average_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(2, average_);
+          .computeDoubleSize(2, minimum_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(3, minimum_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(4, maximum_);
+          .computeDoubleSize(3, maximum_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -409,14 +368,12 @@ public final class MessagesProto {
 
       public Builder clear() {
         super.clear();
-        blockId_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000001);
         average_ = 0D;
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         minimum_ = 0D;
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000002);
         maximum_ = 0D;
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -448,17 +405,13 @@ public final class MessagesProto {
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        result.blockId_ = blockId_;
+        result.average_ = average_;
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.average_ = average_;
+        result.minimum_ = minimum_;
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
-        }
-        result.minimum_ = minimum_;
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
         }
         result.maximum_ = maximum_;
         result.bitField0_ = to_bitField0_;
@@ -477,9 +430,6 @@ public final class MessagesProto {
 
       public Builder mergeFrom(com.kjipo.proto.MessagesProto.DoubleDataBlock other) {
         if (other == com.kjipo.proto.MessagesProto.DoubleDataBlock.getDefaultInstance()) return this;
-        if (other.hasBlockId()) {
-          setBlockId(other.getBlockId());
-        }
         if (other.hasAverage()) {
           setAverage(other.getAverage());
         }
@@ -494,10 +444,6 @@ public final class MessagesProto {
       }
 
       public final boolean isInitialized() {
-        if (!hasBlockId()) {
-          
-          return false;
-        }
         if (!hasAverage()) {
           
           return false;
@@ -532,65 +478,33 @@ public final class MessagesProto {
       }
       private int bitField0_;
 
-      private int blockId_ ;
+      private double average_ ;
       /**
-       * <code>required int32 blockId = 1;</code>
+       * <code>required double average = 1;</code>
        */
-      public boolean hasBlockId() {
+      public boolean hasAverage() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required int32 blockId = 1;</code>
-       */
-      public int getBlockId() {
-        return blockId_;
-      }
-      /**
-       * <code>required int32 blockId = 1;</code>
-       */
-      public Builder setBlockId(int value) {
-        bitField0_ |= 0x00000001;
-        blockId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required int32 blockId = 1;</code>
-       */
-      public Builder clearBlockId() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        blockId_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private double average_ ;
-      /**
-       * <code>required double average = 2;</code>
-       */
-      public boolean hasAverage() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      /**
-       * <code>required double average = 2;</code>
+       * <code>required double average = 1;</code>
        */
       public double getAverage() {
         return average_;
       }
       /**
-       * <code>required double average = 2;</code>
+       * <code>required double average = 1;</code>
        */
       public Builder setAverage(double value) {
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000001;
         average_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required double average = 2;</code>
+       * <code>required double average = 1;</code>
        */
       public Builder clearAverage() {
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         average_ = 0D;
         onChanged();
         return this;
@@ -598,31 +512,31 @@ public final class MessagesProto {
 
       private double minimum_ ;
       /**
-       * <code>required double minimum = 3;</code>
+       * <code>required double minimum = 2;</code>
        */
       public boolean hasMinimum() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required double minimum = 3;</code>
+       * <code>required double minimum = 2;</code>
        */
       public double getMinimum() {
         return minimum_;
       }
       /**
-       * <code>required double minimum = 3;</code>
+       * <code>required double minimum = 2;</code>
        */
       public Builder setMinimum(double value) {
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000002;
         minimum_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required double minimum = 3;</code>
+       * <code>required double minimum = 2;</code>
        */
       public Builder clearMinimum() {
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000002);
         minimum_ = 0D;
         onChanged();
         return this;
@@ -630,31 +544,31 @@ public final class MessagesProto {
 
       private double maximum_ ;
       /**
-       * <code>required double maximum = 4;</code>
+       * <code>required double maximum = 3;</code>
        */
       public boolean hasMaximum() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>required double maximum = 4;</code>
+       * <code>required double maximum = 3;</code>
        */
       public double getMaximum() {
         return maximum_;
       }
       /**
-       * <code>required double maximum = 4;</code>
+       * <code>required double maximum = 3;</code>
        */
       public Builder setMaximum(double value) {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
         maximum_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required double maximum = 4;</code>
+       * <code>required double maximum = 3;</code>
        */
       public Builder clearMaximum() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
         maximum_ = 0D;
         onChanged();
         return this;
@@ -685,10 +599,10 @@ public final class MessagesProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016messages.proto\022\017com.kjipo.proto\"U\n\017Dou" +
-      "bleDataBlock\022\017\n\007blockId\030\001 \002(\005\022\017\n\007average" +
-      "\030\002 \002(\001\022\017\n\007minimum\030\003 \002(\001\022\017\n\007maximum\030\004 \002(\001" +
-      "B \n\017com.kjipo.protoB\rMessagesProto"
+      "\n\016messages.proto\022\017com.kjipo.proto\"D\n\017Dou" +
+      "bleDataBlock\022\017\n\007average\030\001 \002(\001\022\017\n\007minimum" +
+      "\030\002 \002(\001\022\017\n\007maximum\030\003 \002(\001B \n\017com.kjipo.pro" +
+      "toB\rMessagesProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -707,7 +621,7 @@ public final class MessagesProto {
     internal_static_com_kjipo_proto_DoubleDataBlock_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_com_kjipo_proto_DoubleDataBlock_descriptor,
-        new java.lang.String[] { "BlockId", "Average", "Minimum", "Maximum", });
+        new java.lang.String[] { "Average", "Minimum", "Maximum", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

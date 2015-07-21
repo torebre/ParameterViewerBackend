@@ -6,7 +6,7 @@ import java.util.List;
 public interface DataRepository {
 
 
-    Double[] getValueSummary(String parameter, long startIndex, long stopIndex);
+    DataBlock getBlockSummary(int logId, int parameterId, long startIndex, long stopIndex);
 
     List<String> getParameters();
 
