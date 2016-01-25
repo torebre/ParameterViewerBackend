@@ -66,13 +66,14 @@
             <artifactId>javax.el</artifactId>
             <version>2.2.4</version>
         </dependency>
-
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.rethinkdb</groupId>
+            <artifactId>rethinkdb-driver</artifactId>
+        </dependency>
     </dependencies>
-
 
 </project>

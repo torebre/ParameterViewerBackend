@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CacheTest implements ApplicationListener<ApplicationPreparedEvent> {
 
-    @Autowired
+//    @Autowired
     private CacheManager ehCacheCacheManager;
 
 
