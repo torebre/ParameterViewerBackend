@@ -33,7 +33,7 @@ public class DataStreamEndpoints extends SpringBootServletInitializer
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(echoWebSocketHandler(), "/stream").withSockJS();
+        registry.addHandler(getDataStreamWebSocketHandler(), "/stream").withSockJS();
     }
 
     @Bean

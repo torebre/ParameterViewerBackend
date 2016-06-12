@@ -50,7 +50,7 @@ public class EchoWebSocketHandler extends TextWebSocketHandler {
 			throws Exception {
         System.out.println("Test20");
         String echoMessage = this.echoService.getMessage(message.getPayload());
-		logger.debug(echoMessage);
+		logger.info(echoMessage);
 		session.sendMessage(new TextMessage(echoMessage));
 	}
 

@@ -14,12 +14,14 @@ import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 public class DataStreamWebSocketHandler extends AbstractWebSocketHandler {
     private static Logger logger = LoggerFactory.getLogger(DataStreamWebSocketHandler.class);
-    private final DataStreamService dataStreamService;
-
 
     @Autowired
-    public DataStreamWebSocketHandler(DataStreamService dataStreamService) {
-        this.dataStreamService = dataStreamService;
+    private DataStreamService dataStreamService;
+
+
+
+    public DataStreamWebSocketHandler() {
+
     }
 
     @Override

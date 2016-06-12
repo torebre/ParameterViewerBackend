@@ -43,7 +43,8 @@ public class SampleJettyWebSocketsApplication extends SpringBootServletInitializ
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(echoWebSocketHandler(), "/echo").withSockJS();
+		registry.addHandler(echoWebSocketHandler(), "/echo")
+				.setAllowedOrigins("*"); //.withSockJS();
 	}
 
 	@Override
