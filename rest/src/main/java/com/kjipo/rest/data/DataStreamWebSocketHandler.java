@@ -26,7 +26,7 @@ public class DataStreamWebSocketHandler extends AbstractWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
-        System.out.println("Test10");
+        System.out.println("Test11");
         logger.debug("Opened new session in instance {}", this);
     }
 

@@ -13,8 +13,4 @@ public interface DataRepository {
     List<Double> getValues(String parameter, long startIndex, long stopIndex);
 
 
-
-
-
-
 }

@@ -18,9 +18,8 @@ package com.kjipo;
 
 import com.kjipo.client.GreetingService;
 import com.kjipo.client.SimpleGreetingService;
-import com.kjipo.echo.DefaultEchoService;
-import com.kjipo.echo.EchoService;
 import com.kjipo.echo.EchoWebSocketHandler;
+import com.kjipo.websockets.SimpleWebSocketMessageSender;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -31,7 +30,6 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
-import org.springframework.web.socket.handler.PerConnectionWebSocketHandler;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 
@@ -53,8 +51,8 @@ public class SampleJettyWebSocketsApplication extends SpringBootServletInitializ
 	}
 
 	@Bean
-	public EchoService echoService() {
-		return new DefaultEchoService("Did you say \"%s\"?");
+	public SimpleWebSocketMessageSender messageSenderService() {
+		return new SimpleWebSocketMessageSender();
 	}
 
 	@Bean
@@ -62,9 +60,15 @@ public class SampleJettyWebSocketsApplication extends SpringBootServletInitializ
 		return new SimpleGreetingService();
 	}
 
+
+//	@Bean
+//	public ReverseWebSocketEndpoint reverseWebSocketEndpoint() {
+//		return new ReverseWebSocketEndpoint();
+//	}
+
 	@Bean
 	public WebSocketHandler echoWebSocketHandler() {
-		return new EchoWebSocketHandler(echoService());
+		return new EchoWebSocketHandler(messageSenderService());
 	}
 
 	@Bean
