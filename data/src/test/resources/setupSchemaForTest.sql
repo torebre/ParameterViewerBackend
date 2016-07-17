@@ -15,9 +15,9 @@ create table Parameters (
 name VARCHAR(50)
 );
 
-create Table Events (
-id INT PRIMARY KEY,
-logId INT,
-start INT,
-stop INT
-);
+-- create Table Events (
+-- id INT PRIMARY KEY,
+-- logId INT,
+-- start INT,
+-- stop INT
+-- );

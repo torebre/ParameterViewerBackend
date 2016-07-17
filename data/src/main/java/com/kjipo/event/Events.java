@@ -78,4 +78,15 @@ public class Events {
         result = 31 * result + (int) (stop ^ (stop >>> 32));
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Events{" +
+                "id=" + id +
+                ", logId=" + logId +
+                ", start=" + start +
+                ", stop=" + stop +
+                '}';
+    }
+
 }

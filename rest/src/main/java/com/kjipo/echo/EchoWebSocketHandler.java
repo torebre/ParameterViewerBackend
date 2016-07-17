@@ -16,8 +16,8 @@
 
 package com.kjipo.echo;
 
+import com.kjipo.websockets.DataUpdateEventTransmitter;
 import com.kjipo.websockets.MessageConsumer;
-import com.kjipo.websockets.SimpleWebSocketMessageSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,30 +32,29 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 public class EchoWebSocketHandler extends TextWebSocketHandler {
+	private final DataUpdateEventTransmitter simpleWebSocketMessageSender;
+	private final ConcurrentHashMap<String, MessageConsumer> sessionIdMessageConsumerMap = new ConcurrentHashMap<>();
 
 	private static Logger logger = LoggerFactory.getLogger(EchoWebSocketHandler.class);
 
-	private final SimpleWebSocketMessageSender simpleWebSocketMessageSender;
-	private final ConcurrentHashMap<String, MessageConsumer> sessionIdMessageConsumerMap = new ConcurrentHashMap<>();
+
 
 	@Autowired
-	public EchoWebSocketHandler(SimpleWebSocketMessageSender simpleWebSocketMessageSender) {
+	public EchoWebSocketHandler(DataUpdateEventTransmitter simpleWebSocketMessageSender) {
 		this.simpleWebSocketMessageSender = simpleWebSocketMessageSender;
 	}
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) {
 		logger.debug("Opened new session in instance " + this);
-
 		MessageConsumer messageConsumer = message -> {
             try {
-				System.out.println("Sending data to: " +session.getId());
+                logger.debug("Sending data to: {}", session.getId());
 				session.sendMessage(new TextMessage(message));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         };
-
 		sessionIdMessageConsumerMap.put(session.getId(), messageConsumer);
 		simpleWebSocketMessageSender.addMessageConsumer(messageConsumer);
 	}
@@ -72,7 +71,7 @@ public class EchoWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void handleTransportError(WebSocketSession session, Throwable exception)
 			throws Exception {
-		System.out.println("Closing session");
+        logger.debug("Closing session: {}", session);
 		session.close(CloseStatus.SERVER_ERROR);
 		simpleWebSocketMessageSender.removeMessageConsumer(sessionIdMessageConsumerMap.get(session.getId()));
 	}

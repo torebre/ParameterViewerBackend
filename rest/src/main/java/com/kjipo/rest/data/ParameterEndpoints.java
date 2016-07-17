@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@ComponentScan("com.kjipo.data")
-@EnableAutoConfiguration
 @RestController
 public class ParameterEndpoints {
     @Autowired

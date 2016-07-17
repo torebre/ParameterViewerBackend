@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-public class SimpleWebSocketMessageSender {
+public class SimpleWebSocketMessageSender implements DataUpdateEventTransmitter {
     private final Set<MessageConsumer> messageConsumers;
     private ScheduledExecutorService scheduledExecutorService;
     private final AtomicInteger atomicInteger = new AtomicInteger();

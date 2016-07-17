@@ -10,16 +10,22 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.List;
 
 
-@EnableAutoConfiguration
+
 @Component
 public class DataProvider implements DataRepository {
-    @Autowired
     private DataSource dataSource;
+
+
+    @Inject
+    public DataProvider(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
 
     @Override
@@ -70,13 +76,5 @@ public class DataProvider implements DataRepository {
             throw new RuntimeException(e);
         }
     }
-
-
-    public static void main(String args[]) {
-        SpringApplication app = new SpringApplication(DataProvider.class);
-        app.setShowBanner(false);
-        app.run(args);
-    }
-
 
 }

@@ -3,8 +3,8 @@ package com.kjipo.data;
 
 import java.util.List;
 
-public interface DataRepository {
 
+public interface DataRepository {
 
     DataBlock getBlockSummary(int logId, int parameterId, long startIndex, long stopIndex);
 

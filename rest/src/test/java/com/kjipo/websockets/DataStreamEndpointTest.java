@@ -1,7 +1,7 @@
 package com.kjipo.websockets;
 
 
-import com.kjipo.SampleJettyWebSocketsApplication;
+import com.kjipo.MainConfiguration;
 import com.kjipo.client.GreetingService;
 import com.kjipo.client.SimpleClientWebSocketHandler;
 import com.kjipo.client.SimpleGreetingService;
@@ -41,7 +41,7 @@ import static org.junit.Assert.assertEquals;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {SampleJettyWebSocketsApplication.class}) //WebSocketConfig.class, WebSocketEndpoint.class})
+@SpringApplicationConfiguration(classes = {MainConfiguration.class})
 @WebIntegrationTest(randomPort = true)
 public class DataStreamEndpointTest {
 
@@ -122,14 +122,14 @@ public class DataStreamEndpointTest {
 
 
     @Configuration
-    static class ClientConfiguration implements CommandLineRunner {
+    public static class ClientConfiguration implements CommandLineRunner {
 
         @Value("${websocket.uri}")
         private String webSocketUri;
 
-        private final CountDownLatch latch = new CountDownLatch(1);
+        final CountDownLatch latch = new CountDownLatch(1);
 
-        private final AtomicReference<String> messagePayload = new AtomicReference<String>();
+        final AtomicReference<String> messagePayload = new AtomicReference<String>();
 
         @Override
         public void run(String... args) throws Exception {
