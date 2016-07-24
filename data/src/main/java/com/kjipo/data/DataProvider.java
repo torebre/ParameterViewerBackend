@@ -19,7 +19,7 @@ import java.util.List;
 
 @Component
 public class DataProvider implements DataRepository {
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
 
     @Inject
@@ -52,7 +52,7 @@ public class DataProvider implements DataRepository {
     }
 
     @Override
-    public List<String> getParameters() {
+    public List<String> getParameters(int logId) {
         QParameters parameters = new QParameters("c");
         SQLTemplates dialect = new HSQLDBTemplates();
         try {
@@ -64,7 +64,7 @@ public class DataProvider implements DataRepository {
     }
 
     @Override
-    public List<Double> getValues(String parameter, long startIndex, long stopIndex) {
+    public List<Double> getValues(int logId, int parameterId, long startIndex, long stopIndex) {
         QTest testData = new QTest("c");
         SQLTemplates dialect = new HSQLDBTemplates();
         try {

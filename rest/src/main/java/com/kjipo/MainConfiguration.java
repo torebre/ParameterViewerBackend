@@ -4,6 +4,7 @@ import com.kjipo.client.GreetingService;
 import com.kjipo.client.SimpleGreetingService;
 import com.kjipo.data.DataStoreMarker;
 import com.kjipo.echo.EchoWebSocketHandler;
+import com.kjipo.rest.data.DataBlockHttpMessageConverter;
 import com.kjipo.websockets.DataUpdateEventTransmitter;
 import com.kjipo.websockets.SimpleWebSocketMessageSender;
 import com.kjipo.websockets.events.DataUpdateEndpoint;
@@ -68,6 +69,10 @@ public class MainConfiguration extends SpringBootServletInitializer
         return new PropertySourcesPlaceholderConfigurer();
     }
 
+    @Bean
+    DataBlockHttpMessageConverter dataBlockHttpMessageConverter() {
+        return new DataBlockHttpMessageConverter();
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(MainConfiguration.class, args);

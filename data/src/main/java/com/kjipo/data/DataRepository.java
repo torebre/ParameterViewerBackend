@@ -8,9 +8,9 @@ public interface DataRepository {
 
     DataBlock getBlockSummary(int logId, int parameterId, long startIndex, long stopIndex);
 
-    List<String> getParameters();
+    List<String> getParameters(int logId);
 
-    List<Double> getValues(String parameter, long startIndex, long stopIndex);
+    List<Double> getValues(int logId, int parameterId, long startIndex, long stopIndex);
 
 
 }
