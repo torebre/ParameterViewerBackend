@@ -20,6 +20,9 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.sql.DataSource;
@@ -32,16 +35,16 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {ParmeterEndPointsTest.Configuration.class,
+@SpringApplicationConfiguration(classes = {ParameterEndPointsTest.Configuration.class,
         ParameterEndpoints.class, DataProvider.class})
-@WebIntegrationTest({"server.port=0", "management.port=0"})
-public class ParmeterEndPointsTest {
+@WebIntegrationTest({"server.port=9800", "management.port=0"})
+public class ParameterEndPointsTest {
     @Value("${local.server.port}")
     int port;
 
     private RestTemplate template;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ParmeterEndPointsTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ParameterEndPointsTest.class);
 
 
     @Before
@@ -97,6 +100,12 @@ public class ParmeterEndPointsTest {
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
         ResponseEntity<String> response = template.exchange(builder.toUriString(), HttpMethod.GET, entity, String.class);
 
+//        try {
+//            Thread.sleep(Long.MAX_VALUE);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
         ObjectMapper objectMapper = new ObjectMapper();
         List<Double> values = objectMapper.readValue(response.getBody().getBytes(StandardCharsets.UTF_8), List.class);
 
@@ -129,6 +138,21 @@ public class ParmeterEndPointsTest {
         @Bean
         DataBlockHttpMessageConverter dataBlockHttpMessageConverter() {
             return new DataBlockHttpMessageConverter();
+        }
+
+        @Bean
+        public WebMvcConfigurer corsConfigurer() {
+            return new WebMvcConfigurerAdapter() {
+                @Override
+                public void addCorsMappings(CorsRegistry registry) {
+//                    registry.addMapping("/greeting-javaconfig").allowedOrigins("http://localhost:9000");
+
+
+                    System.out.println("Adding CORS mapping");
+                    registry.addMapping("/**").allowedOrigins("*");
+                }
+            };
+
         }
 
     }

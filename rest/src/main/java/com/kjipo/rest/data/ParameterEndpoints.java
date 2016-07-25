@@ -17,14 +17,18 @@ public class ParameterEndpoints {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ParameterEndpoints.class);
 
+    // TODO Check that this assumption is correct:
+    // The ResponseBody-annotation tells Spring that the
+    // returned value does not need to go through a rendering
+    // layer on the server
 
     @RequestMapping(value = "/parameters/{logId}")
-    public List<String> getParameters(@PathVariable int logId) {
+    public @ResponseBody List<String> getParameters(@PathVariable int logId) {
         return dataRepository.getParameters(logId);
     }
 
     @RequestMapping(value = "/parameters/{logId}/{parameterId}")
-    public DataBlock getParameterValueSummary(
+    public @ResponseBody DataBlock getParameterValueSummary(
             @PathVariable(value = "logId") int logId,
             @PathVariable(value = "parameterId") int parameter,
             @RequestParam(value = "start") long start,
@@ -34,12 +38,14 @@ public class ParameterEndpoints {
     }
 
     @RequestMapping(value = "/parameters/{logId}/{parameterId}/values")
-    public List<Double> getValues(@PathVariable(value = "logId") int logId,
+    public @ResponseBody List<Double> getValues(@PathVariable(value = "logId") int logId,
                                   @PathVariable(value = "parameterId") int parameter,
                                   @RequestParam(value = "start") long start,
                                   @RequestParam(value = "stop") long stop) {
 
         // TODO There should be some caching somewhere
+
+        LOGGER.info("Requesting values: {}, {}, {}, {}", logId, parameter, start, stop);
 
         return dataRepository.getValues(logId, parameter, start, stop);
     }
