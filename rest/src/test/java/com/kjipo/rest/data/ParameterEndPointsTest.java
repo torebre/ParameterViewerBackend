@@ -2,6 +2,7 @@ package com.kjipo.rest.data;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
 import com.kjipo.data.DataBlock;
 import com.kjipo.data.DataProvider;
 import org.junit.Before;
@@ -113,6 +114,35 @@ public class ParameterEndPointsTest {
         assertThat(values.size()).isEqualTo(101);
     }
 
+    @Test
+    public void getValueSummaryTest() throws IOException {
+        List<Long> indexRanges = Lists.newArrayList(0L, 20L, 25L, 35L);
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .fromHttpUrl("http://127.0.0.1:" +port +"/parameters/1/1/valueSummary")
+                .queryParam("ranges", indexRanges.toArray());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+
+        LOGGER.info("Request URI: {}", builder.toUriString());
+
+
+
+        ResponseEntity<String> response = template.exchange(builder.toUriString(), HttpMethod.GET, entity, String.class);
+
+        LOGGER.info("Response: {}", response.getBody());
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        List<Double> values = objectMapper.readValue(response.getBody().getBytes(StandardCharsets.UTF_8), List.class);
+//
+//        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+//        assertThat(values.size()).isEqualTo(101);
+
+    }
+
     // This class has a method that returns a DataSource. It will
     // cause a datasource to be available for injection in the
     // DataProvider-class
@@ -137,18 +167,18 @@ public class ParameterEndPointsTest {
 
         @Bean
         DataBlockHttpMessageConverter dataBlockHttpMessageConverter() {
+            // The presence of this will enable REST-methods that
+            // return a DataBlock-object to be able to return it
+            // as Protobuf encoded data
             return new DataBlockHttpMessageConverter();
         }
 
         @Bean
         public WebMvcConfigurer corsConfigurer() {
+            // This is to avoid problems with CORS when doing tests
             return new WebMvcConfigurerAdapter() {
                 @Override
                 public void addCorsMappings(CorsRegistry registry) {
-//                    registry.addMapping("/greeting-javaconfig").allowedOrigins("http://localhost:9000");
-
-
-                    System.out.println("Adding CORS mapping");
                     registry.addMapping("/**").allowedOrigins("*");
                 }
             };
