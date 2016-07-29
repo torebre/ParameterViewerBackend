@@ -2,6 +2,7 @@ package com.kjipo.rest.data;
 
 import com.kjipo.data.DataBlock;
 import com.kjipo.data.DataProvider;
+import com.kjipo.data.IndexRange;
 import com.kjipo.data.RangeTuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +58,6 @@ public class ParameterEndpoints {
         return dataRepository.getValues(logId, parameter, start, stop);
     }
 
-
     @RequestMapping(value = "/parameters/{logId}/{parameterId}/valueSummary")
     public
     @ResponseBody
@@ -82,11 +82,12 @@ public class ParameterEndpoints {
                 temp = value;
             }
         }
-
-        LOGGER.info("Test20");
-
         return dataRepository.getValues(logId, parameterId, rangeTuple);
     }
 
+    @RequestMapping("/indexRange/{logId}")
+    public @ResponseBody IndexRange getIndexRange(@PathVariable int logId) {
+        return dataRepository.getIndexRange(logId);
+    }
 
 }

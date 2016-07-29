@@ -1,6 +1,5 @@
 package com.kjipo.data;
 
-import com.google.common.cache.Cache;
 import com.kjipo.sqlTables.QParameters;
 import com.kjipo.sqlTables.QTest;
 import com.mysema.query.sql.HSQLDBTemplates;
@@ -8,9 +7,6 @@ import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.SQLTemplates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -90,12 +86,29 @@ public class DataProvider implements DataRepository {
     @Override
     public List<DataBlock> getValues(int logId, int parameterId, RangeTuple... rangeTuples) {
         List<DataBlock> result = new ArrayList<>(rangeTuples.length);
-        long start = System.currentTimeMillis();
-
         for (RangeTuple rangeTuple : rangeTuples) {
             result.add(getBlockSummary(logId, parameterId, rangeTuple.getStart(), rangeTuple.getStop()));
         }
         return result;
+    }
+
+    @Override
+    public IndexRange getIndexRange(int logId) {
+        QTest testData = new QTest("c");
+        SQLTemplates dialect = new HSQLDBTemplates();
+        try (
+                Connection connection = dataSource.getConnection()
+        ) {
+            SQLQuery query = new SQLQuery(connection, dialect);
+            Integer minIndex = query.from(testData)
+                    .singleResult(testData.idtime.min());
+            query = new SQLQuery(connection, dialect);
+            Integer maxIndex = query.from(testData)
+                    .singleResult(testData.idtime.max());
+            return new IndexRange(minIndex, maxIndex);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

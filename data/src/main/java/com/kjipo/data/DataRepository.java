@@ -14,5 +14,6 @@ public interface DataRepository {
 
     List<DataBlock> getValues(int logId, int parameterId, RangeTuple... rangeTuples);
 
+    IndexRange getIndexRange(int logId);
 
 }

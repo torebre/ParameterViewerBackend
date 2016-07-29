@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.kjipo.data.DataBlock;
 import com.kjipo.data.DataProvider;
+import com.kjipo.data.IndexRange;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -101,11 +103,11 @@ public class ParameterEndPointsTest {
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
         ResponseEntity<String> response = template.exchange(builder.toUriString(), HttpMethod.GET, entity, String.class);
 
-//        try {
-//            Thread.sleep(Long.MAX_VALUE);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Thread.sleep(Long.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         ObjectMapper objectMapper = new ObjectMapper();
         List<Double> values = objectMapper.readValue(response.getBody().getBytes(StandardCharsets.UTF_8), List.class);
@@ -143,7 +145,24 @@ public class ParameterEndPointsTest {
 
     }
 
-    // This class has a method that returns a DataSource. It will
+    @Test
+    public void getValueIndexRangeTest() throws IOException {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://127.0.0.1:" + port + "/indexRange/1");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+        ResponseEntity<IndexRange> response = template.exchange(builder.toUriString(), HttpMethod.GET, entity, IndexRange.class);
+
+        LOGGER.info("Response: {}", response.getBody());
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        IndexRange responseBody = response.getBody();
+        assertThat(responseBody.getStart()).isEqualTo(0);
+        assertThat(responseBody.getStop()).isEqualTo(999);
+    }
+
+        // This class has a method that returns a DataSource. It will
     // cause a datasource to be available for injection in the
     // DataProvider-class
     @org.springframework.context.annotation.Configuration
