@@ -35,7 +35,7 @@ public class DataProvider implements DataRepository {
         QTest testData = new QTest("c");
         SQLTemplates dialect = new HSQLDBTemplates();
 
-        // TODO Only at test stage now, logId andd parameterId not used
+        // TODO Only at test stage now, logId and parameterId not used
 
         try (
                 Connection connection = dataSource.getConnection()

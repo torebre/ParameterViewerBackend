@@ -16,11 +16,11 @@ import java.util.concurrent.TimeoutException;
 
 // TODO Figure out what the Component-annotation does
 
-@Component
+//@Component
 public class DataStreamServiceImpl implements DataStreamService {
-    @Value("${rethinkdb.host}")
+//    @Value("${rethinkdb.host}")
     private String host;
-    @Value("${rethinkdb.port}")
+//    @Value("${rethinkdb.port}")
     private int port;
 
 //    private Connection conn;
@@ -34,9 +34,11 @@ public class DataStreamServiceImpl implements DataStreamService {
     @Bean
     private Connection getConnection() throws TimeoutException {
 
-        System.out.println("Host: " +host);
+//        System.out.println("Host: " +host);
+//
+//        return rethinkDb.connection().hostname(host).port(port).connect();
 
-        return rethinkDb.connection().hostname(host).port(port).connect();
+        return null;
     }
 
 

@@ -1,70 +1,42 @@
 package com.kjipo.rest.event;
 
 
-import com.kjipo.event.Config;
-import com.kjipo.event.EventRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.kjipo.event.Events;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.context.WebApplicationContext;
-
-import javax.sql.DataSource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = {EventEndpoints.class, Events.class, EventRepository.class}) //, EventRetrievalTest.Config.class})
-@AutoConfigureMockMvc
-@DataJpaTest
+
+/**
+ * This test will start the full application.
+ */
+@RunWith(SpringRunner.class)
+// Need to specify webEnvironment for @SpringBootTest for TestRestTemplate to be injected
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class EventRetrievalTest {
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @Autowired
-    private MockMvc mockMvc;
-
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Before
-    public void setup() throws Exception {
-//        this.mockMvc = webAppContextSetup(webApplicationContext).build();
-    }
 
     @Test
     public void getParametersTest() throws Exception {
-//        restTemplate.getForEntity("/events/1", );
-
-        mockMvc.perform(get("/events/1"))
-                .andDo(mvcResult -> System.out.println("Result: " + mvcResult.getResponse().getContentAsString())
-                )
-                .andExpect(status().isOk());
+        ResponseEntity<String> response = restTemplate.getForEntity("/events/1", String.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<Events> events = objectMapper.readValue(response.getBody(),
+                TypeFactory.defaultInstance().constructCollectionType(List.class, Events.class));
+        assertThat(events).containsOnly(new Events(1L, 1, 0, 2), new Events(2L, 1, 1, 5));
     }
 
-
-    @EnableAutoConfiguration
-    @EnableJpaRepositories
-    static class Config {
-
-            @Autowired
-            private DataSource dataSource;
-
-
-        }
 
 }
 

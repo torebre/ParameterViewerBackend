@@ -8,23 +8,34 @@ import com.kjipo.rest.data.DataBlockHttpMessageConverter;
 import com.kjipo.websockets.DataUpdateEventTransmitter;
 import com.kjipo.websockets.SimpleWebSocketMessageSender;
 import com.kjipo.websockets.events.DataUpdateEndpoint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+
 
 // @SpringBootApplication same as @Configuration @EnableAutoConfiguration @ComponentScan
-@SpringBootApplication(scanBasePackageClasses = {DataStoreMarker.class})
+@SpringBootApplication //(scanBasePackageClasses = {DataStoreMarker.class})
+@EnableJpaRepositories
 public class MainConfiguration extends SpringBootServletInitializer
         implements WebSocketConfigurer {
     private static final String PARAMETER_UPDATE = "/parameter";
+
+    @Autowired
+    private DataSource dataSource;
 
 
     @Override
@@ -72,6 +83,22 @@ public class MainConfiguration extends SpringBootServletInitializer
     @Bean
     DataBlockHttpMessageConverter dataBlockHttpMessageConverter() {
         return new DataBlockHttpMessageConverter();
+    }
+
+    @Bean
+    public EntityManagerFactory entityManagerFactory() {
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(true);
+
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("com.kjipo.event");
+
+        // TODO Is there another way to attach the data source to the EntityManagerFactory?
+        factory.setDataSource(dataSource);
+        factory.afterPropertiesSet();
+
+        return factory.getObject();
     }
 
     public static void main(String[] args) {

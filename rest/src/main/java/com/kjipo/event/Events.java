@@ -13,7 +13,7 @@ public class Events {
     // when trying to persist the object, since it then
     // will always have an existing value set
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue //(strategy = GenerationType.TABLE)
     private Long id;
 
     private long logId;
@@ -28,19 +28,20 @@ public class Events {
 
     }
 
-    public Events(long logId, long start, long stop) {
-        this.logId = logId;
-        this.start = start;
-        this.stop = stop;
-    }
-
-    public Events(long id, long logId, long start, long stop) {
+    public Events(Long id, long logId, long start, long stop) {
         this.id = id;
         this.logId = logId;
         this.start = start;
         this.stop = stop;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public long getLogId() {
         return logId;
@@ -73,16 +74,16 @@ public class Events {
 
         Events events = (Events) o;
 
-        if (id != events.id) return false;
         if (logId != events.logId) return false;
         if (start != events.start) return false;
-        return stop == events.stop;
+        if (stop != events.stop) return false;
+        return id != null ? id.equals(events.id) : events.id == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (int) (logId ^ (logId >>> 32));
         result = 31 * result + (int) (start ^ (start >>> 32));
         result = 31 * result + (int) (stop ^ (stop >>> 32));

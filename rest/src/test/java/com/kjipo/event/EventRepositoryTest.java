@@ -31,9 +31,9 @@ public class EventRepositoryTest {
 
     @Test
     public void eventsStored() throws Exception {
-        Events event1 = new Events(1, 3, 4);
+        Events event1 = new Events(null, 1, 3, 4);
         this.entityManager.persist(event1);
-        Events event2 = new Events(1, 4, 5);
+        Events event2 = new Events(null, 1, 4, 5);
         this.entityManager.persist(event2);
 
         List<Events> events = repository.findByLogId(1);
