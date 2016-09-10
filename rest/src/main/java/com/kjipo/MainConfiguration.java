@@ -11,7 +11,7 @@ import com.kjipo.websockets.events.DataUpdateEndpoint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.socket.WebSocketHandler;
@@ -58,10 +58,10 @@ public class MainConfiguration extends SpringBootServletInitializer
         return new EchoWebSocketHandler(messageSenderService());
     }
 
-    @Bean
-    public ServerEndpointExporter serverEndpointExporter() {
-        return new ServerEndpointExporter();
-    }
+//    @Bean
+//    public ServerEndpointExporter serverEndpointExporter() {
+//        return new ServerEndpointExporter();
+//    }
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {

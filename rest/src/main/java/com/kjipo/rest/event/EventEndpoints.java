@@ -6,6 +6,7 @@ import com.kjipo.event.Events;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ public class EventEndpoints {
     @Autowired
     private EventRepository eventRepository;
 
-    @RequestMapping(value = "/events/{id}")
+    @GetMapping("/events/{id}")
     public List<Events> getEvents(@PathVariable(value = "id") long id) {
         return eventRepository.findByLogId(id);
     }

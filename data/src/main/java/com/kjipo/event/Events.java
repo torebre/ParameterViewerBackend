@@ -3,14 +3,18 @@ package com.kjipo.event;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
 @Entity
 public class Events {
+    // If the ID is a primitive, there will be a problem
+    // when trying to persist the object, since it then
+    // will always have an existing value set
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private long logId;
 
@@ -22,6 +26,12 @@ public class Events {
     Events() {
         // For use with JPA
 
+    }
+
+    public Events(long logId, long start, long stop) {
+        this.logId = logId;
+        this.start = start;
+        this.stop = stop;
     }
 
     public Events(long id, long logId, long start, long stop) {
