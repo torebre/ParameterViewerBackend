@@ -1,16 +1,5 @@
 package com.kjipo.data;
 
-import com.mysema.query.sql.codegen.MetaDataExporter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
-import java.io.File;
-import java.sql.SQLException;
 
 
 /**

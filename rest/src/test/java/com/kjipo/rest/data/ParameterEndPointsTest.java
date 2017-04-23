@@ -14,9 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.TestRestTemplate;
-import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.http.*;
@@ -38,9 +37,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {ParameterEndPointsTest.Configuration.class,
-        ParameterEndpoints.class, DataProvider.class})
-@WebIntegrationTest({"server.port=9800", "management.port=0"})
+@SpringBootTest(classes = {ParameterEndPointsTest.Configuration.class,
+        ParameterEndpoints.class, DataProvider.class},
+webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+//@WebIntegrationTest({"server.port=9800", "management.port=0"})
 public class ParameterEndPointsTest {
     @Value("${local.server.port}")
     int port;
@@ -52,7 +52,7 @@ public class ParameterEndPointsTest {
 
     @Before
     public void setup() {
-        template = new TestRestTemplate();
+        template = new RestTemplate();
     }
 
     @Test
@@ -154,6 +154,13 @@ public class ParameterEndPointsTest {
         ResponseEntity<IndexRange> response = template.exchange(builder.toUriString(), HttpMethod.GET, entity, IndexRange.class);
 
         LOGGER.info("Response: {}", response.getBody());
+
+        // TODO Remove sleep
+        try {
+            Thread.sleep(Long.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 

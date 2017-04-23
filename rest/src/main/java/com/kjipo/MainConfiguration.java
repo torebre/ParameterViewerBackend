@@ -19,6 +19,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
@@ -30,6 +32,8 @@ import javax.sql.DataSource;
 // @SpringBootApplication same as @Configuration @EnableAutoConfiguration @ComponentScan
 @SpringBootApplication //(scanBasePackageClasses = {DataStoreMarker.class})
 @EnableJpaRepositories
+//@EnableWebSocketMessageBroker
+@EnableWebSocket
 public class MainConfiguration extends SpringBootServletInitializer
         implements WebSocketConfigurer {
     private static final String PARAMETER_UPDATE = "/parameter";
