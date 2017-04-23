@@ -35,20 +35,18 @@ import javax.sql.DataSource;
 // @SpringBootApplication same as @Configuration @EnableAutoConfiguration @ComponentScan
 @SpringBootApplication //(scanBasePackageClasses = {DataStoreMarker.class})
 @EnableJpaRepositories
-//@EnableWebSocketMessageBroker
 @EnableWebSocket
 public class MainConfiguration extends SpringBootServletInitializer
         implements WebSocketConfigurer {
-    private static final String PARAMETER_UPDATE = "/parameter";
+    private static final String PARAMETER_UPDATE = "/events";
 
     @Autowired
     private DataSource dataSource;
 
-
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(echoWebSocketHandler(), PARAMETER_UPDATE)
-                .setAllowedOrigins("*"); //.withSockJS();
+                .setAllowedOrigins("*");
     }
 
     @Override
@@ -75,11 +73,6 @@ public class MainConfiguration extends SpringBootServletInitializer
     public WebSocketHandler echoWebSocketHandler() {
         return new EchoWebSocketHandler(messageSenderService());
     }
-
-//    @Bean
-//    public ServerEndpointExporter serverEndpointExporter() {
-//        return new ServerEndpointExporter();
-//    }
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
@@ -108,6 +101,7 @@ public class MainConfiguration extends SpringBootServletInitializer
         return factory.getObject();
     }
 
+    // TODO Define some other CORS setup
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         // This is to avoid problems with CORS when doing tests
