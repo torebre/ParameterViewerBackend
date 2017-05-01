@@ -47,9 +47,9 @@ public class DataProvider implements DataRepository {
 
             // TODO This is not efficient
             return new DataBlock(
-                    values.stream().mapToDouble(Double::doubleValue).average().getAsDouble(),
-                    values.stream().mapToDouble(Double::doubleValue).min().getAsDouble(),
-                    values.stream().mapToDouble(Double::doubleValue).max().getAsDouble());
+                    values.stream().mapToDouble(Double::doubleValue).average().orElse(Double.NaN),
+                    values.stream().mapToDouble(Double::doubleValue).min().orElse(Double.NaN),
+                    values.stream().mapToDouble(Double::doubleValue).max().orElse(Double.NaN));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
